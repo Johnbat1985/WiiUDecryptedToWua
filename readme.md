@@ -1,18 +1,20 @@
 # Wii U NUS → WUA Converter
 
-A three-step workflow and GUI tool for downloading Wii U games from Nintendo's servers and converting them into `.wua` archives ready to load in [Cemu](https://github.com/cemu-project/cemu).
+A three-step workflow and GUI tool for downloading Wii U games from Nintendo's servers and converting them into `.wua` archives ready to load in [Batocera](https://batocera.org).
 
 ---
 
 ## What It Does
 
-Wii U games are distributed in Nintendo's encrypted NUS format — a folder containing `title.tmd`, `title.tik`, and the encrypted content. Cemu's preferred format is `.wua` — a [ZArchive](https://github.com/Exzap/ZArchive) bundle that holds a Base game, its Update, and any DLC all in one file.
+Wii U games are distributed in Nintendo's encrypted NUS format — a folder containing `title.tmd`, `title.tik`, and the encrypted content files. Batocera requires the `.wua` format — a [ZArchive](https://github.com/Exzap/ZArchive) bundle that holds a Base game, its Update, and any DLC all in one file — so that its built-in Cemu core can detect and launch titles correctly.
+
+> **Note:** If you are using desktop Cemu directly, you can point it at the decrypted folders from Step 2 and skip Step 3 entirely. The `.wua` conversion is only needed for Batocera.
 
 This project handles the full pipeline:
 
 1. **Download** — grab the encrypted NUS package directly from Nintendo's servers
 2. **Decrypt** — strip encryption from every game folder at once
-3. **Compile** — GUI tool that groups Base + Update + DLC by title ID and builds each group into a single `.wua`
+3. **Compile** — GUI tool that groups Base + Update + DLC by title ID and builds each group into a single `.wua` for Batocera
 
 ---
 
@@ -83,7 +85,7 @@ The GUI reads `title_id` and `title_version` from each folder's `meta/meta.xml`.
 | `0005000e` | Update |
 | `0005000c` | DLC |
 
-Titles that share the same lower 8 hex digits of their title ID are grouped together. When you click **Compile**, each group is staged into the correct ZArchive subdirectory structure (`<titleId>_v<version>/`) and passed to `zarchive.exe`, producing a single `.wua` file that Cemu loads with the update and DLC automatically applied.
+Titles that share the same lower 8 hex digits of their title ID are grouped together. When you click **Compile**, each group is staged into the correct ZArchive subdirectory structure (`<titleId>_v<version>/`) and passed to `zarchive.exe`, producing a single `.wua` file. Drop that file into Batocera's Wii U roms folder and it will appear as one entry with the update and DLC already applied.
 
 ### Workflow
 
@@ -124,4 +126,5 @@ The GUI saves your paths between sessions in `wua_generator_settings.json` next 
 | WiiUDownloader | Download encrypted NUS titles from Nintendo | https://github.com/Xpl0itU/WiiUDownloader |
 | cdecrypt | Decrypt Wii U NUS dumps | https://github.com/VitaSmith/cdecrypt |
 | ZArchive / zarchive.exe | Build `.wua` / `.zar` archives | https://github.com/Exzap/ZArchive |
-| Cemu | Wii U emulator that loads `.wua` | https://github.com/cemu-project/cemu |
+| Batocera | Retro gaming OS — needs `.wua` for Wii U titles | https://batocera.org |
+| Cemu (desktop) | Can load decrypted folders directly, no `.wua` needed | https://github.com/cemu-project/cemu |
