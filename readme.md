@@ -1,4 +1,4 @@
-# Wii U Decrypted → WUA Converter
+# Wii U NUS → WUA Converter
 
 A two-step workflow and GUI tool for converting a library of encrypted Wii U game dumps into `.wua` archives ready to load in [Cemu](https://github.com/cemu-project/cemu).
 
